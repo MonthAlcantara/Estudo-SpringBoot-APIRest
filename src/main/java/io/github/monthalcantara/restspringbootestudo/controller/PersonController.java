@@ -16,25 +16,37 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/{id}")
-    public Person findById(@PathVariable("id") String id){
+    public Person findById(@PathVariable("id") String id) {
         return personService.findById(id);
     }
+
     @GetMapping
-    public List<Person> findAll(){
+    public List<Person> findAll() {
         List<Person> persons = new ArrayList<>();
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             Person person = mockPerson(String.valueOf(i));
             persons.add(person);
         }
-    return persons;
+        return persons;
     }
+
     @PostMapping
-    public Person save(@RequestBody Person person){
+    public Person save(@RequestBody Person person) {
         return personService.create(person);
     }
 
-    private Person mockPerson(String i){
-       return personService.findById(i);
+    @PutMapping
+    public Person update(@RequestBody Person person) {
+        return personService.update(person);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        personService.delete(id);
+    }
+
+    private Person mockPerson(String i) {
+        return personService.findById(i);
     }
 
 

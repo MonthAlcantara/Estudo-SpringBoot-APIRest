@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class PersonServiceImpl implements PersonService{
 
     private final AtomicLong counter = new AtomicLong();
-
+    @Override
     public Person findById(String id){
        Person person = new Person();
        person.setId(counter.incrementAndGet());
@@ -19,8 +19,18 @@ public class PersonServiceImpl implements PersonService{
        person.setGender("Male");
         return person;
     }
-
+    @Override
     public Person create(Person person) {
         return person;
+    }
+
+    @Override
+    public Person update(Person person) {
+        return person;
+    }
+
+    @Override
+    public void delete(Long id) {
+
     }
 }
