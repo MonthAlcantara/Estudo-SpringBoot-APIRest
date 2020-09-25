@@ -1,8 +1,8 @@
 package io.github.monthalcantara.restspringbootestudo.adapter;
 
+import io.github.monthalcantara.restspringbootestudo.data.model.Person;
+import io.github.monthalcantara.restspringbootestudo.data.vo.PersonVO;
 import io.github.monthalcantara.restspringbootestudo.mocks.MockPerson;
-import io.github.monthalcantara.restspringbootestudo.model.Person;
-import io.github.monthalcantara.restspringbootestudo.model.vo.PersonVO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

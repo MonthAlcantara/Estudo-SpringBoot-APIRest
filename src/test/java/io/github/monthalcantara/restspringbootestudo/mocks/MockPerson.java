@@ -1,7 +1,7 @@
 package io.github.monthalcantara.restspringbootestudo.mocks;
 
-import io.github.monthalcantara.restspringbootestudo.model.Person;
-import io.github.monthalcantara.restspringbootestudo.model.vo.PersonVO;
+import io.github.monthalcantara.restspringbootestudo.data.model.Person;
+import io.github.monthalcantara.restspringbootestudo.data.vo.PersonVO;
 
 import java.util.ArrayList;
 import java.util.List;

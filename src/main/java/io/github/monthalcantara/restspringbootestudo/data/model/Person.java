@@ -1,4 +1,4 @@
-package io.github.monthalcantara.restspringbootestudo.model;
+package io.github.monthalcantara.restspringbootestudo.data.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

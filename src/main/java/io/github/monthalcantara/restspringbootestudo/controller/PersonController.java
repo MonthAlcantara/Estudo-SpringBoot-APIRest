@@ -1,6 +1,6 @@
 package io.github.monthalcantara.restspringbootestudo.controller;
 
-import io.github.monthalcantara.restspringbootestudo.model.vo.PersonVO;
+import io.github.monthalcantara.restspringbootestudo.data.vo.PersonVO;
 import io.github.monthalcantara.restspringbootestudo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

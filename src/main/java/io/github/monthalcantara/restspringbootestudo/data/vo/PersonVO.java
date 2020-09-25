@@ -1,4 +1,4 @@
-package io.github.monthalcantara.restspringbootestudo.model.vo;
+package io.github.monthalcantara.restspringbootestudo.data.vo;
 
 import java.util.Objects;
 
