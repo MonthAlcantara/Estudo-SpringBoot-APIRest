@@ -5,7 +5,6 @@ import io.github.monthalcantara.restspringbootestudo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,18 +15,13 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/{id}")
-    public Person findById(@PathVariable("id") String id) {
+    public Person findById(@PathVariable("id") Long id) {
         return personService.findById(id);
     }
 
     @GetMapping
-    public List<Person> findAll() {
-        List<Person> persons = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Person person = mockPerson(String.valueOf(i));
-            persons.add(person);
-        }
-        return persons;
+    public List<Person> findAll() throws Exception {
+        return personService.findAll();
     }
 
     @PostMapping
@@ -45,9 +39,6 @@ public class PersonController {
         personService.delete(id);
     }
 
-    private Person mockPerson(String i) {
-        return personService.findById(i);
-    }
 
 
 }
