@@ -1,6 +1,6 @@
 package io.github.monthalcantara.restspringbootestudo.controller;
 
-import io.github.monthalcantara.restspringbootestudo.model.Person;
+import io.github.monthalcantara.restspringbootestudo.model.vo.PersonVO;
 import io.github.monthalcantara.restspringbootestudo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +15,22 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/{id}")
-    public Person findById(@PathVariable("id") Long id) {
+    public PersonVO findById(@PathVariable("id") Long id) {
         return personService.findById(id);
     }
 
     @GetMapping
-    public List<Person> findAll() throws Exception {
+    public List<PersonVO> findAll() throws Exception {
         return personService.findAll();
     }
 
     @PostMapping
-    public Person save(@RequestBody Person person) {
+    public PersonVO save(@RequestBody PersonVO person) {
         return personService.create(person);
     }
 
     @PutMapping
-    public Person update(@RequestBody Person person) {
+    public PersonVO update(@RequestBody PersonVO person) {
         return personService.update(person);
     }
 
