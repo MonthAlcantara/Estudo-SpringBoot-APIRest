@@ -1,4 +1,4 @@
-package io.github.monthalcantara.restspringbootestudo.service;
+package io.github.monthalcantara.restspringbootestudo.service.interfaces;
 
 import io.github.monthalcantara.restspringbootestudo.data.vo.PersonVO;
 

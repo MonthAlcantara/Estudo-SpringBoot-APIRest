@@ -1,10 +1,11 @@
-package io.github.monthalcantara.restspringbootestudo.service;
+package io.github.monthalcantara.restspringbootestudo.service.implementations;
 
 import io.github.monthalcantara.restspringbootestudo.adapter.DozerConverter;
 import io.github.monthalcantara.restspringbootestudo.exception.ResourceNotFoundException;
 import io.github.monthalcantara.restspringbootestudo.data.model.Person;
 import io.github.monthalcantara.restspringbootestudo.data.vo.PersonVO;
 import io.github.monthalcantara.restspringbootestudo.repository.PersonRepository;
+import io.github.monthalcantara.restspringbootestudo.service.interfaces.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
