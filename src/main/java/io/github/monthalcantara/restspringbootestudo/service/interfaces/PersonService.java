@@ -1,6 +1,6 @@
 package io.github.monthalcantara.restspringbootestudo.service.interfaces;
 
-import io.github.monthalcantara.restspringbootestudo.data.vo.PersonVO;
+import io.github.monthalcantara.restspringbootestudo.data.vo.v1.PersonVO;
 
 import java.util.List;
 
