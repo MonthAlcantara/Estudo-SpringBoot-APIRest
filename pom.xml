@@ -37,6 +37,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+
 		<!--	Flyway	-->
 
 		<dependency>
@@ -45,6 +46,7 @@
 		</dependency>
 
 		<!-- Dozer-->
+
 		<dependency>
 			<groupId>com.github.dozermapper</groupId>
 			<artifactId>dozer-core</artifactId>
@@ -52,15 +54,24 @@
 		</dependency>
 
 		<!-- Jackson (suporte a serialização xml) -->
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 
 		<!-- Jackson (suporte a serialização yaml) -->
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+
+		<!-- HATEOAS -->
+
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
 		</dependency>
 
 			<dependency>
