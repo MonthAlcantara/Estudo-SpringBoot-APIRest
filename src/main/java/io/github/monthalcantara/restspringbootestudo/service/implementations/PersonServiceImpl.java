@@ -36,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonVO update(PersonVO person) {
-        Person personUpdate = converterVoToPerson(findById(person.getId()));
+        Person personUpdate = converterVoToPerson(findById(person.getKey()));
         personUpdate.setFirstName(person.getFirstName());
         personUpdate.setLastName(person.getLastName());
         personUpdate.setAddress(person.getAddress());

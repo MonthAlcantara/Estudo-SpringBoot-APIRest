@@ -3,31 +3,40 @@ package io.github.monthalcantara.restspringbootestudo.data.vo.v1;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
+import org.springframework.hateoas.ResourceSupport;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-@JsonPropertyOrder({"id", "address", "first_name", "last_name", "gender"})
-public class PersonVO {
+@JsonPropertyOrder({"id", "address", "first_name", "last_name", "gender"}) // Para escolher a ordem como será organizado o recurso entregue ao client
+public class PersonVO extends ResourceSupport implements Serializable {
 
-    private Long id;
+    /*O resource Support ja possui uma especie de id que ele irá usar para fazer o retorno dos endpoints
+     * dessa forma essa classe não usará o nome id mas sim key. Para não quebrar a conversão do DOZER,
+     * já que não terei mais o id, posso usar a anotation @Mapping do DOZER e mapear key como "id"
+     */
+    @Mapping("id") // para mapear o atributo de conversão do DOZER
+    @JsonProperty("id")// para mapear a forma como será entregue ao client
+    private Long key;
 
-    @JsonProperty("first_name")
+    @JsonProperty("first_name") // para mapear a forma como será entregue ao client
     private String firstName;
 
-    @JsonProperty("last_name")
+    @JsonProperty("last_name") // para mapear a forma como será entregue ao client
     private String lastName;
 
     private String address;
 
-    @JsonIgnore
+    @JsonIgnore // Para não enviar ao client
     private String gender;
 
-    public Long getId() {
-        return id;
+    public Long getKey() {
+        return key;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setKey(Long key) {
+        this.key = key;
     }
 
     public String getFirstName() {
@@ -67,7 +76,7 @@ public class PersonVO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PersonVO personVO = (PersonVO) o;
-        return Objects.equals(id, personVO.id) &&
+        return Objects.equals(key, personVO.key) &&
                 Objects.equals(firstName, personVO.firstName) &&
                 Objects.equals(lastName, personVO.lastName) &&
                 Objects.equals(address, personVO.address) &&
@@ -76,6 +85,6 @@ public class PersonVO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(key, firstName, lastName, address, gender);
     }
 }
