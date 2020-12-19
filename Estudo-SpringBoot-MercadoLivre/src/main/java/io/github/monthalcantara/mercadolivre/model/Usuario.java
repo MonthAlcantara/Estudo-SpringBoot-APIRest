@@ -1,4 +1,8 @@
-package io.github.monthalcantara.mercadolivre.controller;
+package io.github.monthalcantara.mercadolivre.model;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -8,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "usuario", indexes = {@Index(columnList = "login")})
+@Table(name = "usuario", indexes = {@Index(name = "login", unique = true, columnList = "login")})
 public class Usuario {
 
     @Id
@@ -29,10 +33,22 @@ public class Usuario {
     public Usuario() {
     }
 
+    /**
+     *
+     * @param login String formato de Email
+     * @param senha String não encodado (Texto Limpo)
+     */
     public Usuario(@NotBlank @Email String login, @NotBlank @Size(min = 6) String senha) {
+        verificaDadosDeEntrada(login, senha);
         this.login = login;
-        this.senha = senha;
+        this.senha = new BCryptPasswordEncoder().encode(senha);
         this.instanteCriacao = LocalDateTime.now();
+    }
+
+    private void verificaDadosDeEntrada(@NotBlank @Email String login, @NotBlank @Size(min = 6) String senha) {
+        Assert.hasText(login, "Login do usuario não pode ser vazio");
+        Assert.hasText(senha, "Login do usuario não pode ser vazio");
+        Assert.isTrue(senha.length() >= 6, "A senha do usuario precisa ter 6 mais caracteres");
     }
 
     public UUID getId() {

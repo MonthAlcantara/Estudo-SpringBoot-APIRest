@@ -2,6 +2,7 @@ package io.github.monthalcantara.mercadolivre.controller;
 
 import io.github.monthalcantara.mercadolivre.dto.request.NovoUsuarioRequest;
 import io.github.monthalcantara.mercadolivre.dto.response.UsuarioResponse;
+import io.github.monthalcantara.mercadolivre.model.Usuario;
 import io.github.monthalcantara.mercadolivre.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

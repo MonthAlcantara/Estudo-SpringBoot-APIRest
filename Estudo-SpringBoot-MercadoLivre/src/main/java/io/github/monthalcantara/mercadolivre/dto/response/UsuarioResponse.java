@@ -1,7 +1,7 @@
 package io.github.monthalcantara.mercadolivre.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.github.monthalcantara.mercadolivre.controller.Usuario;
+import io.github.monthalcantara.mercadolivre.model.Usuario;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
