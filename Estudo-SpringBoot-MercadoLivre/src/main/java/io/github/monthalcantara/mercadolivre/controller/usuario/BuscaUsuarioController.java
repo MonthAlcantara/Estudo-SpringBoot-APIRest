@@ -1,6 +1,5 @@
-package io.github.monthalcantara.mercadolivre.controller;
+package io.github.monthalcantara.mercadolivre.controller.usuario;
 
-import io.github.monthalcantara.mercadolivre.dto.request.NovoUsuarioRequest;
 import io.github.monthalcantara.mercadolivre.dto.response.UsuarioResponse;
 import io.github.monthalcantara.mercadolivre.exception.ApiErrorException;
 import io.github.monthalcantara.mercadolivre.model.Usuario;
@@ -10,13 +9,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,26 +23,12 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController {
+public class BuscaUsuarioController {
 
     private UsuarioRepository usuarioRepository;
 
-    public UsuarioController(UsuarioRepository usuarioRepository) {
+    public BuscaUsuarioController(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-    }
-
-    @PostMapping
-    @Transactional
-    public ResponseEntity criaNovoUsuario(@Valid @RequestBody NovoUsuarioRequest usuarioRequest, UriComponentsBuilder builder) {
-        Usuario usuario = converteUsuarioRequestEmUsuario(usuarioRequest);
-        usuarioRepository.save(usuario);
-
-        URI uri = builder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).build();
-    }
-
-    private Usuario converteUsuarioRequestEmUsuario(@Valid NovoUsuarioRequest usuarioRequest) {
-        return usuarioRequest.toModel();
     }
 
     @GetMapping("/{id}")
@@ -52,9 +37,14 @@ public class UsuarioController {
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
-        Usuario usuario = usuarioOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
+        Usuario usuario = verificaSeFoiEncontradoUsuario(usuarioOptional);
 
         return ResponseEntity.ok(new UsuarioResponse(usuario));
+    }
+
+    private Usuario verificaSeFoiEncontradoUsuario(Optional<Usuario> usuarioOptional) {
+        return usuarioOptional
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
     }
 
     @GetMapping("/login/{login}")
