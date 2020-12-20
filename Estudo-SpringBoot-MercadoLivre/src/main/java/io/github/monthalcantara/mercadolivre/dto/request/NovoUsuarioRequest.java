@@ -1,6 +1,7 @@
 package io.github.monthalcantara.mercadolivre.dto.request;
 
 import io.github.monthalcantara.mercadolivre.model.Usuario;
+import io.github.monthalcantara.mercadolivre.validators.UniqueValue;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ public class NovoUsuarioRequest {
 
     @NotBlank
     @Email
+    @UniqueValue(atributo = "login", classe = Usuario.class)
     private String login;
 
     @NotBlank
