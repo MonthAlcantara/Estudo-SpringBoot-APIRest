@@ -59,6 +59,10 @@ public class Usuario {
         return login;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
     public LocalDateTime getInstanteCriacao() {
         return instanteCriacao;
     }
