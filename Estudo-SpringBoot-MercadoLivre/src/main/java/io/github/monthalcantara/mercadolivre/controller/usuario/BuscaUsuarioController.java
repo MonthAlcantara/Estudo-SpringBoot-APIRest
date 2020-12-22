@@ -6,6 +6,7 @@ import io.github.monthalcantara.mercadolivre.model.Usuario;
 import io.github.monthalcantara.mercadolivre.repository.UsuarioRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class BuscaUsuarioController {
 
     @GetMapping("/login/{login}")
     @Transactional
-    public ResponseEntity buscaUsuarioPeloLogin(@PathVariable("login") String login, @PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity buscaUsuarioPeloLogin(@PathVariable("login") String login, @PageableDefault(size = 5, direction = Sort.Direction.ASC,sort = "id") Pageable pageable) {
         List<Usuario> usuarios = usuarioRepository.buscaPorLoginQueContem(login, pageable).getContent();
 
         verificaSeListaEstaVazia(usuarios);
