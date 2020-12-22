@@ -5,8 +5,10 @@ import io.github.monthalcantara.mercadolivre.dto.response.ProdutoResponse;
 import io.github.monthalcantara.mercadolivre.exception.ApiErrorException;
 import io.github.monthalcantara.mercadolivre.model.Produto;
 import io.github.monthalcantara.mercadolivre.repository.ProdutoRepository;
+import io.github.monthalcantara.mercadolivre.validators.CaracteristicasRepetidasValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -26,6 +28,11 @@ public class ProdutoController {
     public ProdutoController(ProdutoRepository produtoRepository, EntityManager manager) {
         this.produtoRepository = produtoRepository;
         this.manager = manager;
+    }
+
+    @InitBinder
+    public void init(WebDataBinder binder){
+       binder.addValidators(new CaracteristicasRepetidasValidator());
     }
 
 

@@ -1,17 +1,20 @@
 package io.github.monthalcantara.mercadolivre.dto.request;
 
 import io.github.monthalcantara.mercadolivre.exception.ApiErrorException;
+import io.github.monthalcantara.mercadolivre.model.CaracteristicaProduto;
 import io.github.monthalcantara.mercadolivre.model.Categoria;
 import io.github.monthalcantara.mercadolivre.model.Produto;
 import io.github.monthalcantara.mercadolivre.validators.ExistsValue;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class NovoProdutoRequest {
 
@@ -27,7 +30,8 @@ public class NovoProdutoRequest {
     private int quantidade;
 
     @Size(min = 3)
-    private List<String> caracteristicas;
+    @Valid
+    private List<CaracteristicaProdutoRequest> caracteristicas = new ArrayList<>();
 
     @Length(max = 1000)
     private String descricao;
@@ -43,7 +47,7 @@ public class NovoProdutoRequest {
     public NovoProdutoRequest(@NotBlank String nome,
                               @NotNull @Positive BigDecimal valor,
                               @NotNull @Positive int quantidade,
-                              @Min(3) List<String> caracteristicas,
+                              @Min(3) List<CaracteristicaProdutoRequest> caracteristicas,
                               @Size(min = 1000) String descricao,
                               @NotNull UUID categoriaId) {
         this.nome = nome;
@@ -57,7 +61,16 @@ public class NovoProdutoRequest {
     public Produto toModel(EntityManager manager) {
         Categoria categoria = buscaCategoriaNoBanco(manager);
         verificaSeExisteCategoria(categoria);
-        return new Produto(this.nome, this.valor, this.quantidade, this.caracteristicas, this.descricao, categoria);
+
+        List<CaracteristicaProduto> caracteristicasProdutos = toListModel(this.caracteristicas);
+
+        Assert.isTrue(caracteristicasProdutos.size() >= 3, "O produto precisa ter no mínimo 3 caracteristicas para ser cadastrado");
+        return new Produto(this.nome, this.valor, this.quantidade, caracteristicasProdutos, this.descricao, categoria);
+    }
+
+    private List<CaracteristicaProduto> toListModel(List<CaracteristicaProdutoRequest> caracteristicas) {
+        Assert.isTrue(!caracteristicas.isEmpty(), "O produto precisa ter no mínimo 3 caracteristicas para ser cadastrado");
+        return caracteristicas.stream().map(caracteristicaProdutoRequest -> caracteristicaProdutoRequest.toModel()).collect(Collectors.toList());
     }
 
     private Categoria buscaCategoriaNoBanco(EntityManager manager) {
@@ -68,6 +81,18 @@ public class NovoProdutoRequest {
         if (categoria == null) {
             throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Não foi possível cadastrar esse produto, verifique");
         }
+    }
+
+    public Set<String> temCaracteristicaRepetida() {
+        Set<String> caracteristicasRepetidas = new HashSet<>();
+        Set<String> nomesIguais = new HashSet<>();
+
+        for(CaracteristicaProdutoRequest caracteristica : this.caracteristicas){
+            if(!nomesIguais.add(caracteristica.getNome())){
+                caracteristicasRepetidas.add(caracteristica.getNome());
+            }
+        }
+        return caracteristicasRepetidas;
     }
 
     public String getNome() {
@@ -82,7 +107,7 @@ public class NovoProdutoRequest {
         return quantidade;
     }
 
-    public List<String> getCaracteristicas() {
+    public List<CaracteristicaProdutoRequest> getCaracteristicas() {
         return caracteristicas;
     }
 

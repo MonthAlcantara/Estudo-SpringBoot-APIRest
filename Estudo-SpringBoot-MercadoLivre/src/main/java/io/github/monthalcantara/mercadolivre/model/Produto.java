@@ -1,12 +1,17 @@
 package io.github.monthalcantara.mercadolivre.model;
 
-import org.apache.tomcat.jni.Local;
+import io.github.monthalcantara.mercadolivre.dto.request.CaracteristicaProdutoRequest;
+import io.github.monthalcantara.mercadolivre.dto.response.CaracteristicaProdutoResponse;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(indexes = {@Index(name = "nome", columnList = "nome")})
@@ -27,9 +32,8 @@ public class Produto {
     @Positive
     private int quantidade;
 
-    @ElementCollection
-    @CollectionTable(name = "caracteristicas")
-    private List<String> caracteristicas;
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    private List<CaracteristicaProduto> caracteristicas = new ArrayList<>();
 
     @Size(max = 1000)
     @Column(length = 1000)
@@ -48,7 +52,7 @@ public class Produto {
     public Produto(@NotBlank String nome,
                    @NotNull @Positive BigDecimal valor,
                    @NotNull @Positive int quantidade,
-                   @Min(3) List<String> caracteristicas,
+                   @Min(3) List<CaracteristicaProduto> caracteristicas,
                    @Size(max = 1000) String descricao,
                    @NotNull Categoria categoria) {
         this.nome = nome;
@@ -76,7 +80,7 @@ public class Produto {
         return quantidade;
     }
 
-    public List<String> getCaracteristicas() {
+    public List<CaracteristicaProduto> getCaracteristicas() {
         return caracteristicas;
     }
 
@@ -86,5 +90,9 @@ public class Produto {
 
     public Categoria getCategoria() {
         return categoria;
+    }
+
+    public List<CaracteristicaProdutoResponse> toListCaracteristicasResponse() {
+     return this.caracteristicas.stream().map(CaracteristicaProdutoResponse::new).collect(Collectors.toList());
     }
 }

@@ -3,7 +3,9 @@ package io.github.monthalcantara.mercadolivre.dto.response;
 import io.github.monthalcantara.mercadolivre.model.Produto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ProdutoResponse {
 
@@ -13,7 +15,7 @@ public class ProdutoResponse {
 
     private int quantidade;
 
-    private List<String> caracteristicas;
+    private List<CaracteristicaProdutoResponse> caracteristicas = new ArrayList<>();
 
     private String descricao;
 
@@ -27,7 +29,7 @@ public class ProdutoResponse {
         this.nome = produto.getNome();
         this.valor = produto.getValor();
         this.quantidade = produto.getQuantidade();
-        this.caracteristicas = produto.getCaracteristicas();
+        this.caracteristicas = produto.toListCaracteristicasResponse();
         this.descricao = produto.getDescricao();
         this.categoria = new CategoriaResponse(produto.getCategoria());
     }
@@ -44,7 +46,7 @@ public class ProdutoResponse {
         return quantidade;
     }
 
-    public List<String> getCaracteristicas() {
+    public List<CaracteristicaProdutoResponse> getCaracteristicas() {
         return caracteristicas;
     }
 

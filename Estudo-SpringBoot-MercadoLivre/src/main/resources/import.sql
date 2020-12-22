@@ -1,1 +1,2 @@
 --INSERT INTO usuario (login, senha) VALUES ('teste@teste.com.br', '$2a$10$29WIbJXgfK9oepW7jadcB.0sRrs9CNmUD2MSiVTTMK5fIxPJGF7jG');
+--insert into usuario (instante_criacao, login, senha, id) VALUES ('teste@teste.com.br', '$2a$10$29WIbJXgfK9oepW7jadcB.0sRrs9CNmUD2MSiVTTMK5fIxPJGF7jG','c93358c8-7f7c-4666-a1d8-87f080621987');
