@@ -5,7 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class LoginInputDto {
 
     private String login;
-    private String password;
+    private String senha;
 
     public String getLogin() {
         return login;
@@ -15,17 +15,16 @@ public class LoginInputDto {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public UsernamePasswordAuthenticationToken build() {
         return new UsernamePasswordAuthenticationToken(this.login,
-                this.password);
+                this.senha);
     }
-
 }

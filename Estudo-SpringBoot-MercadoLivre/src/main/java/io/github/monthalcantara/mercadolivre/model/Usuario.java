@@ -2,7 +2,6 @@ package io.github.monthalcantara.mercadolivre.model;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -34,7 +33,6 @@ public class Usuario {
     }
 
     /**
-     *
      * @param login String formato de Email
      * @param senha String não encodado (Texto Limpo)
      */

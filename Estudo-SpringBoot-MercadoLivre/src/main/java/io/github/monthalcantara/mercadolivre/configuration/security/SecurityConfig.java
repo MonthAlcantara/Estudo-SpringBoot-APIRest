@@ -126,6 +126,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/**.html",
+                "/h2/**",
                 "/v2/api-docs",
                 "/webjars/**",
                 "/configuration/**",
