@@ -19,7 +19,6 @@ public class CaracteristicaProduto {
     private String descricao;
 
     @ManyToOne
-    //@NotNull
     private Produto produto;
 
     public CaracteristicaProduto(String nome, String descricao) {
