@@ -1,4 +1,4 @@
-package io.github.monthalcantara.mercadolivre.controller.opiniao;
+package io.github.monthalcantara.mercadolivre.dto.request;
 
 import io.github.monthalcantara.mercadolivre.model.Opiniao;
 import io.github.monthalcantara.mercadolivre.model.Produto;

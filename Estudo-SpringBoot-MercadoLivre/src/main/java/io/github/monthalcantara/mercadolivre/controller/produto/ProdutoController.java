@@ -31,13 +31,14 @@ public class ProdutoController {
     }
 
     @InitBinder
-    public void init(WebDataBinder binder){
-       binder.addValidators(new CaracteristicasRepetidasValidator());
+    public void init(WebDataBinder binder) {
+        binder.addValidators(new CaracteristicasRepetidasValidator());
     }
 
 
     @PostMapping
     @Transactional
+    //TODO Implementar um usuario default cadastrando opiniao
     public ResponseEntity criaNovoProduto(@RequestBody @Valid NovoProdutoRequest produtoRequest, UriComponentsBuilder builder) {
         Produto produto = produtoRequest.toModel(manager);
         produtoRepository.save(produto);

@@ -1,5 +1,6 @@
 package io.github.monthalcantara.mercadolivre.controller.opiniao;
 
+import io.github.monthalcantara.mercadolivre.dto.request.NovaOpiniaoRequest;
 import io.github.monthalcantara.mercadolivre.model.Opiniao;
 import io.github.monthalcantara.mercadolivre.repository.OpiniaoRepository;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class OpiniaoController {
 
     @PostMapping
     @Transactional
+    //TODO receber o id do produto pelo path, seguindo as boas praticas e implementar um usuario default cadastrando opiniao
     public ResponseEntity criaNovaOpiniao(@RequestBody @Valid NovaOpiniaoRequest opiniaoRequest, UriComponentsBuilder builder) {
 
         Opiniao opiniao = opiniaoRequest.toModel(manager);
