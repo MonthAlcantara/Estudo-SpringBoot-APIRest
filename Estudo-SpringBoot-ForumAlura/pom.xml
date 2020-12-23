@@ -41,6 +41,14 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!--Lib de trabalho com web token java-->
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
