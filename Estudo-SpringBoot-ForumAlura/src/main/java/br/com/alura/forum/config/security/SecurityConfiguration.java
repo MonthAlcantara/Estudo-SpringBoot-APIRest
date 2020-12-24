@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.swing.*;
 
 @EnableWebSecurity
 @Configuration
@@ -21,8 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private AutenticacaoService autenticacaoService;
 
     /*
-    * Para poder injetar o authenticationManager la no meu controller de autenticação
-    * */
+     * Para poder injetar o authenticationManager la no meu controller de autenticação
+     * */
     @Override
     @Bean
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -89,12 +92,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                  * eu informo que a politica de criação de sessão é stateless como rege as boas práticas
                  * do desenvolvimento de api's
                  * */
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 /*Nesse caso eu não vou mais ter a tela padrão do Spring com o formLogin
                   e também perco o controller default onde o spring fazia toda a mágica de receber
                   o login e senha do formLogin. Nesse caso agora eu é que tenho que criar um controller
-                  para receber esses dados e gerar o token
+                  para receber esses dados e gerar o token e um filtro para interceptar a requisição
+                  pegar o token e validar
                  */
+                .and()
+                /*
+                Só que o Spring tem um filtro próprio. Se eu quiser usar o meu eu preciso dizer que o
+                meu fitro deve ser usado antes mesmo do filtro do Spring
+                */
+                .addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 
