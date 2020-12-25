@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Eu preciso informar ao Springo qual perfil deve estar ativo, se eu não
  * informar, o Spring subirá um perfil default dele, ou seja vai carregar
  * todas as classes que não esteja anotada com @Profile
+ * para dizer qual perfil deverá ser usado por VM Parametro, pode ser feito por:
+ * run -> Profile -> Edit -> VM Options = -Dspring.profiles.active=dev (Pra dev por exemplo)
  * */
 @Profile("dev")
 public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter {

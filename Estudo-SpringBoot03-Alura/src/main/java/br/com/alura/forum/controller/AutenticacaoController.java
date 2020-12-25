@@ -3,6 +3,7 @@ package br.com.alura.forum.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,15 @@ import br.com.alura.forum.controller.form.LoginForm;
 
 @RestController
 @RequestMapping("/auth")
+/*
+ * Essa classe só será carregada quando o perfil ativo for o de Prod.
+ * Eu preciso informar ao Springo qual perfil deve estar ativo, se eu não
+ * informar, o Spring subirá um perfil default dele, ou seja vai carregar
+ * todas as classes que não esteja anotada com @Profile
+ * para dizer qual perfil deverá ser usado por VM Parametro, pode ser feito por:
+ * run -> Profile -> Edit -> VM Options = -Dspring.profiles.active=dev (Pra dev por exemplo)
+ * */
+@Profile("prod")
 public class AutenticacaoController {
 	
 	@Autowired
