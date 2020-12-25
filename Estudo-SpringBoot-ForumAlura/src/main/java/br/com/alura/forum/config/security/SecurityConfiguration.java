@@ -3,6 +3,7 @@ package br.com.alura.forum.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,10 +15,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.swing.*;
-
 @EnableWebSecurity
 @Configuration
+/*
+ * Essa classe só será carregada quando o perfil ativo for o de Prod.
+ * Eu preciso informar ao Springo qual perfil deve estar ativo, se eu não
+ * informar, o Spring subirá um perfil default dele, ou seja vai carregar
+ * todas as classes que não esteja anotada com @Profile
+ * */
+@Profile("prod")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -67,6 +73,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //Permito acesso a todos
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+                /*
+                 * Quando for realizado um delete para o endpoint '/topicos/*'
+                 * será verificado no token qual a Claim (ROLE) que ele possui
+                 * e só será permitida execução da requisição se a role for, nesse
+                 * caso, o de moderador
+                 * */
+                .antMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("MODERADOR")
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 //Qualquer outra requisção fora as que eu citei acima
                 .anyRequest()
@@ -110,10 +123,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /*
      * Serve para configurar o acesso a conteúdos estáticos como CSS, JS, Imagens
-     * Faria sentido numa aplicação com Spring MVC, nesse caso de Api com apenas Backend, não faz muito sentido
      * */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+        web.ignoring().antMatchers("/**.html",
+                "/v2/api-docs",
+                "/webjars/**",
+                "/configuration/**",
+                "/swagger-resources/**");
     }
 }

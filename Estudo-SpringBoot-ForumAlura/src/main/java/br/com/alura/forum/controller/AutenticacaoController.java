@@ -3,6 +3,7 @@ package br.com.alura.forum.controller;
 import br.com.alura.forum.config.security.TokenManager;
 import br.com.alura.forum.controller.dto.TokenDTO;
 import br.com.alura.forum.controller.form.LoginForm;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+/*
+ * Essa classe só será carregada quando o perfil ativo for o de Prod.
+ * Eu preciso informar ao Springo qual perfil deve estar ativo, se eu não
+ * informar, o Spring subirá um perfil default dele, ou seja vai carregar
+ * todas as classes que não esteja anotada com @Profile
+ * */
+@Profile("prod")
 public class AutenticacaoController {
 
     /*
@@ -61,9 +69,9 @@ public class AutenticacaoController {
             String token = tokenService.gerarToken(authentication);
 
             /*
-            * Para não devolver o token simplesmente, eu criei uma classe DTO para devolver esse
-            * token ao cliente e nele informo o token + o método que será utilizado basic, Bearer...
-            * */
+             * Para não devolver o token simplesmente, eu criei uma classe DTO para devolver esse
+             * token ao cliente e nele informo o token + o método que será utilizado basic, Bearer...
+             * */
             return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();

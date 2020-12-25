@@ -24,6 +24,7 @@ public class Usuario implements UserDetails {
     //Como eu sempre vou precisar trazer os perfis ao buscar o usuario. Eu ja seto o fetch como eager
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfis = new ArrayList<>();
+
     @Override
     public int hashCode() {
         final int prime = 31;

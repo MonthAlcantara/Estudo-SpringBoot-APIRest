@@ -47,6 +47,13 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/topicos").permitAll()
 		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+				/*
+				* Quando for realizado um delete para o endpoint '/topicos/*'
+				* será verificado no token qual a Claim (ROLE) que ele possui
+				* e só será permitida execução da requisição se a role for, nesse
+				* caso, o de moderador
+				* */
+		.antMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("MODERADOR")
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 		.anyRequest().authenticated()
