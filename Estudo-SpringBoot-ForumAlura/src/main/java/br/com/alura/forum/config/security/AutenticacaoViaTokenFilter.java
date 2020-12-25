@@ -1,5 +1,6 @@
 package br.com.alura.forum.config.security;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -13,6 +14,7 @@ import java.io.IOException;
 * para validar. Ela estende OncePerRequestFilter que faz esse serviço
 * uma vez por requisiçãp
 * */
+@Configuration
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
     @Override
@@ -27,7 +29,6 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
         ja pode seguir pra onde ele estava indo
         */
         filterChain.doFilter(httpServletRequest,httpServletResponse);
-        System.out.println(token);
         //Próximo passo é validar o token iae vou usar novamente a biblioteca jjwt
     }
 

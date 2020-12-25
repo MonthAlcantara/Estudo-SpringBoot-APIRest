@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class GeraTokenService {
+public class TokenManager {
 
     @Value("${forum.jwt.expiration}")
     private String expiration;
@@ -23,11 +23,15 @@ public class GeraTokenService {
     public String gerarToken(Authentication authentication) {
         /*
          * Eu preciso pegar o usuario daquela requisição que está logado e o Authentication
-         * possui o método getPrincipal que me permite fazer isso
+         * possui o método getPrincipal que me permite fazer isso. Devolve um object, por isso
+         * o cast
          * */
         Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
 
         Date hoje = new Date();
+        /*
+         * insiro a expiração setada no application properties
+         * */
         Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
         return Jwts
                 //Chamando o builder do JJWT

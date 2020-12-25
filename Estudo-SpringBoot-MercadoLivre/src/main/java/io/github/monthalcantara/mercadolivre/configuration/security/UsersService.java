@@ -44,11 +44,11 @@ public class UsersService implements UserDetailsService {
 
         /*
          * Query definida no application properties security.username-query
+         * List<?> objects = manager.createQuery(query).setParameter("username", username).getResultList();
          * */
-        List<Usuario> objects = manager.createNamedQuery(Usuario.BUSCA_POR_LOGIN,Usuario.class)
+        List<Usuario> objects = manager.createNamedQuery(Usuario.BUSCA_POR_LOGIN,Usuario.class) // Abordagem usando namedQuery
                 .setParameter("username", username).getResultList();
-//        List<?> objects = manager.createQuery(query)
-//                .setParameter("username", username).getResultList();
+
         /*
          * Programação defensiva. Se tiver mais de um usuario com o mesmo login
          * é bug (Não deveria existir)

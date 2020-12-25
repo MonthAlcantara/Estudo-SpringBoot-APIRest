@@ -1,6 +1,6 @@
 package br.com.alura.forum.controller;
 
-import br.com.alura.forum.config.security.GeraTokenService;
+import br.com.alura.forum.config.security.TokenManager;
 import br.com.alura.forum.controller.dto.TokenDTO;
 import br.com.alura.forum.controller.form.LoginForm;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +27,9 @@ public class AutenticacaoController {
      * e anotar ela como o @Bean
      * */
     private AuthenticationManager authenticationManager;
-    private GeraTokenService tokenService;
+    private TokenManager tokenService;
 
-    public AutenticacaoController(AuthenticationManager authenticationManager, GeraTokenService tokenService) {
+    public AutenticacaoController(AuthenticationManager authenticationManager, TokenManager tokenService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
     }

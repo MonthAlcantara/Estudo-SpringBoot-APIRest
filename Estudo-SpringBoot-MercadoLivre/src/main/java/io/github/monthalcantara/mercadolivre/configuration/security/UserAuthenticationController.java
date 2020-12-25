@@ -38,11 +38,22 @@ public class UserAuthenticationController {
     * Nesse endpoint eu recebo um LoginInputDto
     * */
     public ResponseEntity<String> authenticate(@RequestBody LoginInputDto loginInfo) {
-
+        /*Para fazer a autenticação eu preciso passar um objeto do tipo UsernamePasswordAuthenticationToken
+         * Iae eu preciso converter esse login que chega nesse objeto. Fiz como sempre faço com o
+         * toModel() só que chamei de build() aqui
+         */
         UsernamePasswordAuthenticationToken authenticationToken = loginInfo.build();
 
         try {
+            /*
+             * Quando chegar nessa linha o Spring sabe que deve chamar o AutenticacaoService
+             * */
             Authentication authentication = authManager.authenticate(authenticationToken);
+            /*
+            iae para devolver o token eu vou usar a lib do jjwt que coloquei no projeto
+            iae pra não deixar o código da biblioteca solta no controller, é boa pratica criar um
+            Service para concentrar esse código de criação do token
+            */
             String jwt = tokenManager.generateToken(authentication);
 
             return ResponseEntity.ok(jwt);

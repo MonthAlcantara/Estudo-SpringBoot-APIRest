@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+/*
+* Indices devem ser criados em tabela que recebem muitas consultas mas que os dados são
+* pouco atualizados por que isso força o indice a criar uma nova métrica a cada atualização
+* iae o ganho de performance por ter o indice pode ser um tiro no pé
+* */
 @Table(name = "usuario", indexes = {@Index(name = "login", unique = true, columnList = "login")})
 @NamedQuery(name = "Usuario.BUSCA_POR_LOGIN", query = "select u from Usuario u where u.login = :username")
 public class Usuario {
@@ -29,6 +34,7 @@ public class Usuario {
 
     private LocalDateTime instanteCriacao;
 
+    //Criando uma variável statica para poder usar em qqr outra classe e não precisar reescrever a query
     public static final String BUSCA_POR_LOGIN = "Usuario.BUSCA_POR_LOGIN";
 
     @Deprecated

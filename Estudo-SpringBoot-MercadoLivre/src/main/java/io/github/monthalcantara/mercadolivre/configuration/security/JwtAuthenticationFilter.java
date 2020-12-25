@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+/*
+ * Essa classe será usada para filtrar as requisições pegando o token
+ * para validar. Ela estende OncePerRequestFilter que faz esse serviço
+ * uma vez por requisiçãp
+ * */
 @Configuration
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -81,6 +86,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * requisição
      * */
     private Optional<String> getTokenFromRequest(HttpServletRequest request) {
+        /*
+         * Pelo request eu consigo pegar os dados da requisição inclusive os dados do header
+         * eu chamo o método getHeader(Passando o nome do que eu quero no header) eu consigo
+         * buscar os valores
+         * */
         String authToken = request.getHeader("Authorization");
 
         return Optional.ofNullable(authToken);

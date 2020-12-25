@@ -26,7 +26,9 @@ public class TokenManager {
     public String generateToken(Authentication authentication) {
 
         /*
-         * faço o cast pra UserDetails
+         * Eu preciso pegar o usuario daquela requisição que está logado e o Authentication
+         * possui o método getPrincipal que me permite fazer isso. Devolve um object, por isso
+         * o cast
          * */
         UserDetails user = (UserDetails) authentication.getPrincipal();
 
@@ -40,11 +42,23 @@ public class TokenManager {
          * Gero meu token JWT e é esse token que eu retorno no UserAuthenticationController
          * */
         return Jwts.builder()
+                //Quem é o Issuer? quem foi a aplicação q fez a geração do token?
                 .setIssuer("Desafio jornada dev eficiente mercado livre")
+                //A quem esse token pertence? Quem é o usuario autenticado dono
+                // desse token. Eu preciso passar algo que identifique o usuario
                 .setSubject(user.getUsername())
+                //Qual foi a data de geração do token? O jWT utiliza a biblioteca antiga de datas do java
                 .setIssuedAt(now)
+                /*Qual a data de expiração do token? Ele tbm espera uma Date. Só que aí ao invés de
+                passar o horario diretamente aqui eu posso criar no application.properties e injetar no atributo expiration
+                */
                 .setExpiration(expiration)
+                /*
+                  Pela especificação do Token ele precisa ser criptografado então para isso eu uso o método
+                  signWith onde eu informo o algotirimo de criptografia HS256 e o segredo que será usada para a codificação
+                */
                 .signWith(SignatureAlgorithm.HS256, this.secret)
+                //Aqui eu compacto tudo e gero o token
                 .compact();
     }
 
@@ -57,6 +71,7 @@ public class TokenManager {
             return false;
         }
     }
+
 
     public String getUserName(String jwt) {
         Claims claims = Jwts.parser().setSigningKey(this.secret)
