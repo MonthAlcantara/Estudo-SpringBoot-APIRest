@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "usuario", indexes = {@Index(name = "login", unique = true, columnList = "login")})
+@NamedQuery(name = "Usuario.BUSCA_POR_LOGIN", query = "select u from Usuario u where u.login = :username")
 public class Usuario {
 
     @Id
@@ -27,6 +28,8 @@ public class Usuario {
     private String senha;
 
     private LocalDateTime instanteCriacao;
+
+    public static final String BUSCA_POR_LOGIN = "Usuario.BUSCA_POR_LOGIN";
 
     @Deprecated
     public Usuario() {

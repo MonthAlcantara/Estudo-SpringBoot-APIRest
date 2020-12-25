@@ -1,5 +1,6 @@
 package io.github.monthalcantara.mercadolivre.configuration.security;
 
+import io.github.monthalcantara.mercadolivre.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,8 +45,10 @@ public class UsersService implements UserDetailsService {
         /*
          * Query definida no application properties security.username-query
          * */
-        List<?> objects = manager.createQuery(query)
+        List<Usuario> objects = manager.createNamedQuery(Usuario.BUSCA_POR_LOGIN,Usuario.class)
                 .setParameter("username", username).getResultList();
+//        List<?> objects = manager.createQuery(query)
+//                .setParameter("username", username).getResultList();
         /*
          * Programação defensiva. Se tiver mais de um usuario com o mesmo login
          * é bug (Não deveria existir)

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
-
+   // @Query(Usuario.BUSCA_POR_LOGIN)
     Optional<Usuario> findByLogin(String login);
 
     @Query("Select u from Usuario u where u.login like %:login%")
