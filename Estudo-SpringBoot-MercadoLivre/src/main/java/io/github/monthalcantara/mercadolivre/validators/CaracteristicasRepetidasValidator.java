@@ -24,6 +24,7 @@ public class CaracteristicasRepetidasValidator implements Validator {
         NovoProdutoRequest novoProdutoRequest = (NovoProdutoRequest) value;
 
         Set<String> caracteristicasRepetidas = novoProdutoRequest.temCaracteristicaRepetida();
+
         if (!caracteristicasRepetidas.isEmpty()) {
 
             errors.rejectValue("Caracteristicas", null,"não pode ser repetido " + caracteristicasRepetidas);
