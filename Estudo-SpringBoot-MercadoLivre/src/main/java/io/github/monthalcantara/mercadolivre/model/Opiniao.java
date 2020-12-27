@@ -29,6 +29,10 @@ public class Opiniao {
     @ManyToOne
     private Produto produto;
 
+    @Deprecated
+    public Opiniao() {
+    }
+
     public Opiniao(int nota, String titulo, String descricao, Produto produto) {
         this.nota = nota;
         this.titulo = titulo;

@@ -1,6 +1,7 @@
 package io.github.monthalcantara.mercadolivre.configuration.security;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import java.util.Optional;
  * uma vez por requisiçãp
  * */
 @Configuration
+@Profile(value = {"test","prod"})
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /*

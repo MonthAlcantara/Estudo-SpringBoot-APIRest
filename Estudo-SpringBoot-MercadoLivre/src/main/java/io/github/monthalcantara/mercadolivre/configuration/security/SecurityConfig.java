@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -26,6 +27,7 @@ import java.io.IOException;
 
 @Configuration // Por ser uma Classe de configuração a ser lida pelo @SpringBootApplication
 @EnableWebSecurity // Para que essa classe se integre ao SpringMVC
+@Profile(value = {"test","prod"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsersService usersService;
@@ -40,9 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     /*
-    * Esse bean está sendo usado com uma constante do próprio Spring Security
-    * que ja define como o Authentication Manager é exposto no contexto do Spring
-    * */
+     * Esse bean está sendo usado com uma constante do próprio Spring Security
+     * que ja define como o Authentication Manager é exposto no contexto do Spring
+     * */
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -114,9 +116,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /*
-    * Nesse ponto eu digo que estou usando o Bcrypt para encodar minha senha
-    * O mesmo utilizado na senha para salvar no banco
-    * */
+     * Nesse ponto eu digo que estou usando o Bcrypt para encodar minha senha
+     * O mesmo utilizado na senha para salvar no banco
+     * */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(this.usersService)

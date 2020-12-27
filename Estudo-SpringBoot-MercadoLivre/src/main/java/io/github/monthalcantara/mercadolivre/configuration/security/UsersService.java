@@ -3,6 +3,7 @@ package io.github.monthalcantara.mercadolivre.configuration.security;
 import io.github.monthalcantara.mercadolivre.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,7 @@ import java.util.List;
  * se existe alguem correspondente no meu banco de dados
  * */
 @Service
+@Profile(value = {"test","prod"})
 public class UsersService implements UserDetailsService {
 
     @PersistenceContext
