@@ -50,6 +50,8 @@ public class NovoProdutoRequest {
                               @Min(3) List<CaracteristicaProdutoRequest> caracteristicas,
                               @Size(min = 1000) String descricao,
                               @NotNull UUID categoriaId) {
+
+        Assert.isTrue(caracteristicas.size() >= 3, "O produto precisa ter no mínimo 3 caracteristicas para ser cadastrado");
         this.nome = nome;
         this.valor = valor;
         this.quantidade = quantidade;

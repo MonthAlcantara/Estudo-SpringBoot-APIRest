@@ -26,6 +26,7 @@ public class ExistsValueValidator implements ConstraintValidator<ExistsValue, Ob
         if(value == null){
             return true;
         }
+
         return !manager
                 .createQuery("Select x from " + classe.getSimpleName() + " x where x." + attributo + " =:value")
                 .setParameter("value", value)
