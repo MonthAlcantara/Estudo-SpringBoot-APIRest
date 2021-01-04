@@ -1,6 +1,6 @@
 package io.github.monthalcantara.mercadolivre.controller.produto;
 
-import com.sun.xml.bind.v2.TODO;
+import io.github.monthalcantara.mercadolivre.compartilhado.UsuarioLogado;
 import io.github.monthalcantara.mercadolivre.dto.request.NovoProdutoRequest;
 import io.github.monthalcantara.mercadolivre.dto.response.ProdutoResponse;
 import io.github.monthalcantara.mercadolivre.exception.ApiErrorException;
@@ -9,6 +9,7 @@ import io.github.monthalcantara.mercadolivre.repository.ProdutoRepository;
 import io.github.monthalcantara.mercadolivre.validators.CaracteristicasRepetidasValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -39,8 +40,11 @@ public class ProdutoController {
 
     @PostMapping
     @Transactional
-    //TODO Implementar um usuario default cadastrando opiniao
-    public ResponseEntity criaNovoProduto(@RequestBody @Valid NovoProdutoRequest produtoRequest, UriComponentsBuilder builder) {
+    //TODO Implementar um usuario dono do produto9 | Usar o auth.getPrincipal();
+    public ResponseEntity criaNovoProduto(@RequestBody @Valid NovoProdutoRequest produtoRequest, UriComponentsBuilder builder, Authentication auth) {
+
+      //  UsuarioLogado usu = (UsuarioLogado) auth.getPrincipal();
+
         Produto produto = produtoRequest.toModel(manager);
         produtoRepository.save(produto);
 

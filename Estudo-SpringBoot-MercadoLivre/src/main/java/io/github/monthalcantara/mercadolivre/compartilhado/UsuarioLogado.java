@@ -24,11 +24,14 @@ public class UsuarioLogado implements UserDetails {
         springUserDetails = new User(usuario.getLogin(), usuario.getSenha(), List.of());
     }
 
-
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
     public Collection<GrantedAuthority> getAuthorities() {
         return springUserDetails.getAuthorities();
     }
+
 
     public String getPassword() {
         return springUserDetails.getPassword();
@@ -54,8 +57,5 @@ public class UsuarioLogado implements UserDetails {
         return springUserDetails.isCredentialsNonExpired();
     }
 
-    public Usuario get() {
-        return usuario;
-    }
 
 }

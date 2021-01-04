@@ -1,16 +1,12 @@
 package io.github.monthalcantara.mercadolivre.model;
 
-import io.github.monthalcantara.mercadolivre.dto.request.CaracteristicaProdutoRequest;
 import io.github.monthalcantara.mercadolivre.dto.response.CaracteristicaProdutoResponse;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -44,6 +40,12 @@ public class Produto {
     private Categoria categoria;
 
     private LocalDateTime instanteCriacao;
+
+    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE})
+    private Set<Opiniao> opinioes = new HashSet<>();
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<Pergunta> perguntas = new HashSet<>();
 
     @Deprecated
     private Produto() {
@@ -90,6 +92,22 @@ public class Produto {
 
     public Categoria getCategoria() {
         return categoria;
+    }
+
+    public Set<Opiniao> getOpinioes() {
+        return Collections.unmodifiableSet(opinioes);
+    }
+
+    public void adicionaOpiniao(Opiniao opiniao){
+        this.opinioes.add(opiniao);
+    }
+
+    public void adicionaPergunta(Pergunta pergunta){
+        this.perguntas.add(pergunta);
+    }
+
+    public Set<Pergunta> getPerguntas() {
+        return this.perguntas;
     }
 
     public List<CaracteristicaProdutoResponse> toListCaracteristicasResponse() {

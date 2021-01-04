@@ -35,11 +35,19 @@ public class NovaOpiniaoRequest {
         this.descricao = descricao;
     }
 
-    public Opiniao toModel(EntityManager manager, Integer id) {
-        Produto produto = manager.find(Produto.class, id);
-        Assert.notNull(produto, "Para cadastrar a opiniao, um produto deve ser associado");
-        return new Opiniao(this.nota, this.titulo, this.descricao, produto);
+    public Opiniao toModel() {
+          return new Opiniao(this.nota, this.titulo, this.descricao);
     }
+
+// public Opiniao toModel(EntityManager manager, Integer id) {
+////        Produto produto = manager.find(Produto.class, id);
+////        Assert.notNull(produto, "Para cadastrar a opiniao, um produto deve ser associado");
+//
+//        Opiniao opiniao = new Opiniao(this.nota, this.titulo, this.descricao);
+//        //produto.adicionaOpiniao(opiniao);
+//
+//        return opiniao;
+//    }
 
     public int getNota() {
         return nota;

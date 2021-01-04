@@ -27,10 +27,12 @@ public class ExistsValueValidator implements ConstraintValidator<ExistsValue, Ob
             return true;
         }
 
-        return !manager
+        boolean existeResgistroComValorInformado = !manager
                 .createQuery("Select x from " + classe.getSimpleName() + " x where x." + attributo + " =:value")
                 .setParameter("value", value)
                 .getResultList()
                 .isEmpty();
+
+        return existeResgistroComValorInformado;
     }
 }

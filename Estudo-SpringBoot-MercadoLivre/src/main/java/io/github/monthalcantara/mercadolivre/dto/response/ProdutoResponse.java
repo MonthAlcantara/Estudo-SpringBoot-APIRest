@@ -1,11 +1,13 @@
 package io.github.monthalcantara.mercadolivre.dto.response;
 
+import io.github.monthalcantara.mercadolivre.model.Opiniao;
 import io.github.monthalcantara.mercadolivre.model.Produto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ProdutoResponse {
 
@@ -21,6 +23,8 @@ public class ProdutoResponse {
 
     private CategoriaResponse categoria;
 
+    private Set<OpiniaoResponse> opinioes;
+
     @Deprecated
     private ProdutoResponse() {
     }
@@ -32,6 +36,8 @@ public class ProdutoResponse {
         this.caracteristicas = produto.toListCaracteristicasResponse();
         this.descricao = produto.getDescricao();
         this.categoria = new CategoriaResponse(produto.getCategoria());
+        Set<OpiniaoResponse> opiniaoResponses = produto.getOpinioes().stream().map(OpiniaoResponse::new).collect(Collectors.toSet());
+        this.opinioes = opiniaoResponses;
     }
 
     public String getNome() {
@@ -57,4 +63,5 @@ public class ProdutoResponse {
     public CategoriaResponse getCategoria() {
         return categoria;
     }
+
 }

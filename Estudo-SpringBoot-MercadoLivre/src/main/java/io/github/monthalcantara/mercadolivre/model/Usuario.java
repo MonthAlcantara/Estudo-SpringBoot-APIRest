@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 /*
@@ -33,6 +33,9 @@ public class Usuario {
     private String senha;
 
     private LocalDateTime instanteCriacao;
+
+    @OneToMany
+    private Set<Opiniao> opinioes = new HashSet<>();
 
     //Criando uma variável statica para poder usar em qqr outra classe e não precisar reescrever a query
     public static final String BUSCA_POR_LOGIN = "Usuario.BUSCA_POR_LOGIN";
@@ -72,5 +75,13 @@ public class Usuario {
 
     public LocalDateTime getInstanteCriacao() {
         return instanteCriacao;
+    }
+
+    public void adicionarOpiniao(Opiniao opiniao) {
+        this.opinioes.add(opiniao);
+    }
+
+    public Set<Opiniao> getOpinioes() {
+        return Collections.unmodifiableSet(opinioes);
     }
 }
