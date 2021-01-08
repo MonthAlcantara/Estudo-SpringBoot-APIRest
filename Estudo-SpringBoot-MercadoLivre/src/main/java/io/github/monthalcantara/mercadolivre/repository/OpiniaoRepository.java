@@ -13,5 +13,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface OpiniaoRepository extends JpaRepository<Opiniao, UUID> {
+public interface OpiniaoRepository extends JpaRepository<Opiniao, Integer> {
 }

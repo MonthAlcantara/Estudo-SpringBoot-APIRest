@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class UsuarioResponse {
 
-    private UUID id;
+    private Integer id;
 
     private String login;
 
@@ -21,7 +21,7 @@ public class UsuarioResponse {
         this.instanteCriacao = usuario.getInstanteCriacao();
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 

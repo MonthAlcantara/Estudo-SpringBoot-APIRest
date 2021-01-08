@@ -17,24 +17,32 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidatorContext;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-//@ExtendWith(SpringExtension.class)
+@ExtendWith(SpringExtension.class)
 class ExistsValueValidatorTest {
 
-
-
-    @Autowired
+    @Mock
     private EntityManager manager;
 
-    private ExistsValueValidator existsValueValidator = new ExistsValueValidator(manager);
+    @Autowired
+    private ExistsValue constraintAnnotation;
+
+    @InjectMocks
+    private ExistsValueValidator existsValueValidator;
 
 
     @Test
     void isValid() {
+        existsValueValidator.initialize(constraintAnnotation);
         Categoria categoria = new Categoria("Telefonia");
-        manager.persist(categoria);
+
+        Mockito.when(manager.createQuery(Mockito.anyString()).setParameter(Mockito.anyString(), Mockito.any()).getResultList().isEmpty()).thenReturn(true);
         boolean valid = existsValueValidator.isValid(categoria.getId(), null);
 
         Assertions.assertTrue(valid);

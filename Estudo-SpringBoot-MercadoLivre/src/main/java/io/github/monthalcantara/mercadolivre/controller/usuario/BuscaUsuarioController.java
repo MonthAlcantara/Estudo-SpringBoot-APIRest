@@ -34,7 +34,7 @@ public class BuscaUsuarioController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity buscaUsuarioPeloId(@PathVariable("id") UUID id) {
+    public ResponseEntity buscaUsuarioPeloId(@PathVariable("id") Integer id) {
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 

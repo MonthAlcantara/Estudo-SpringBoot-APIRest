@@ -44,7 +44,7 @@ public class Produto {
     @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE})
     private Set<Opiniao> opinioes = new HashSet<>();
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private Set<Pergunta> perguntas = new HashSet<>();
 
     @Deprecated

@@ -1,5 +1,6 @@
 package io.github.monthalcantara.mercadolivre.repository;
 
+import io.github.monthalcantara.mercadolivre.model.Pergunta;
 import io.github.monthalcantara.mercadolivre.model.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,12 +13,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-   // @Query(Usuario.BUSCA_POR_LOGIN)
-    Optional<Usuario> findByLogin(String login);
+public interface PerguntaRepository extends JpaRepository<Pergunta, Integer> {
 
-    @Query("Select u from Usuario u where u.login like %:login%")
-    Page<Usuario> buscaPorLoginQueContem(@Param("login") String login, Pageable pageable);
-
-    boolean existsUsuarioByLogin(String login);
 }

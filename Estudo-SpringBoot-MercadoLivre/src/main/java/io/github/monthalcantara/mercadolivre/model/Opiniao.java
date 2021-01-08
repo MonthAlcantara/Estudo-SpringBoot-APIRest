@@ -2,10 +2,7 @@ package io.github.monthalcantara.mercadolivre.model;
 
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,19 +23,25 @@ public class Opiniao {
 
     @NotBlank
     private String titulo;
+
     @NotBlank
     @Length(max = 500)
     private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
 
     @Deprecated
     public Opiniao() {
     }
 
-    public Opiniao(int nota, String titulo, String descricao) {
+    public Opiniao(int nota, String titulo, String descricao, Usuario usuario) {
         this.nota = nota;
         this.titulo = titulo;
         this.descricao = descricao;
+        this.usuario = usuario;
     }
 
     public int getNota() {
@@ -64,6 +67,10 @@ public class Opiniao {
         Opiniao opiniao = (Opiniao) o;
         return id.equals(opiniao.id) &&
                 titulo.equals(opiniao.titulo);
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     @Override

@@ -1,13 +1,15 @@
 package io.github.monthalcantara.mercadolivre.dto.request;
 
 import io.github.monthalcantara.mercadolivre.model.Opiniao;
-import io.github.monthalcantara.mercadolivre.model.Produto;
-import io.jsonwebtoken.lang.Assert;
+import io.github.monthalcantara.mercadolivre.model.Usuario;
+import io.github.monthalcantara.mercadolivre.repository.UsuarioRepository;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityManager;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class NovaOpiniaoRequest {
@@ -23,6 +25,9 @@ public class NovaOpiniaoRequest {
     @NotBlank
     private String descricao;
 
+    @NotNull
+    private Integer usuarioId;
+
     @Deprecated
     public NovaOpiniaoRequest() {
     }
@@ -35,19 +40,9 @@ public class NovaOpiniaoRequest {
         this.descricao = descricao;
     }
 
-    public Opiniao toModel() {
-          return new Opiniao(this.nota, this.titulo, this.descricao);
+    public Opiniao toModel(Usuario usuario) {
+          return new Opiniao(this.nota, this.titulo, this.descricao, usuario);
     }
-
-// public Opiniao toModel(EntityManager manager, Integer id) {
-////        Produto produto = manager.find(Produto.class, id);
-////        Assert.notNull(produto, "Para cadastrar a opiniao, um produto deve ser associado");
-//
-//        Opiniao opiniao = new Opiniao(this.nota, this.titulo, this.descricao);
-//        //produto.adicionaOpiniao(opiniao);
-//
-//        return opiniao;
-//    }
 
     public int getNota() {
         return nota;
@@ -59,6 +54,10 @@ public class NovaOpiniaoRequest {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public Integer getUsuarioId() {
+        return usuarioId;
     }
 }
 
