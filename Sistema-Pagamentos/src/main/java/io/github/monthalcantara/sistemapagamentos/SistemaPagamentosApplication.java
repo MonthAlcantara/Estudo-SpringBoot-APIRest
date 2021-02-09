@@ -1,4 +1,4 @@
-package io.github.monthalcantara.SistemaPagamentos;
+package io.github.monthalcantara.sistemapagamentos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
